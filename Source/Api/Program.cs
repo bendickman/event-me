@@ -1,3 +1,5 @@
+using Application.Core;
+using Application.Events.Queries;
 using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,14 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddMediatR(x =>
+{
+    x.RegisterServicesFromAssemblyContaining<GetEventList.Handler>();
+    x.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+});
+
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
 {
