@@ -1,3 +1,4 @@
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
 import { useEffect, useState } from "react"
 
 export default function EventList () {
@@ -10,12 +11,15 @@ export default function EventList () {
     }, [])
 
     return (
-        <div>
-            <ul>
+        <>
+            <Typography variant='h2'>EventMe</Typography>
+            <List>
                 {appEvents.map((appEvent) => (
-                    <li key={appEvent.id}>{appEvent.title}</li>
+                    <ListItem key={appEvent.id}>
+                        <ListItemText>{appEvent.title}</ListItemText>    
+                    </ListItem>
                 ))}
-            </ul>
-        </div>
+            </List>
+        </>
     )
 }
