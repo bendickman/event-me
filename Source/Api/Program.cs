@@ -34,6 +34,8 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,6 +46,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod()
+    .WithOrigins("https://localhost:5173", "http://localhost:5173"));
 
 app.UseAuthentication();
 app.UseAuthorization();
