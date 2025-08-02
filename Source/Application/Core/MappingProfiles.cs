@@ -9,6 +9,9 @@ public class MappingProfiles : Profile
     public MappingProfiles()
     {
         string? currentUserId = null;
+
+        CreateMap<AppEvent, AppEvent>();
         CreateMap<AppEvent, EventDto>();
+        CreateMap<CreateEventDto, AppEvent>();
     }
 }
