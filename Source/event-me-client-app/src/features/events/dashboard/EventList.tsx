@@ -1,13 +1,13 @@
 import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import axios from "axios";
 import { useEffect, useState } from "react"
 
 export default function EventList () {
     const [appEvents, setAppEvents] = useState<AppEvent[]>([]);
 
     useEffect(() => {
-        fetch('https://localhost:7171/api/v1/event?pagesize=25')
-            .then(response => response.json())
-            .then(data => setAppEvents(data.items))
+        axios.get('https://localhost:7171/api/v1/event?pagesize=25')
+            .then(response => setAppEvents(response.data.items))
     }, [])
 
     return (
