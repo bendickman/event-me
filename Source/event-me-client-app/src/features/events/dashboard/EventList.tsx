@@ -1,25 +1,17 @@
-import { List, ListItem, ListItemText, Typography } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react"
+import { Box } from "@mui/material";
+import EventCard from "./EventCard";
 
-export default function EventList () {
-    const [appEvents, setAppEvents] = useState<AppEvent[]>([]);
+type Props = {
+    appEvents: AppEvent[];
+}
 
-    useEffect(() => {
-        axios.get('https://localhost:7171/api/v1/event?pagesize=25')
-            .then(response => setAppEvents(response.data.items))
-    }, [])
+export default function EventList ({appEvents} : Props) {
 
     return (
-        <>
-            <Typography variant='h2'>EventMe</Typography>
-            <List>
-                {appEvents.map((appEvent) => (
-                    <ListItem key={appEvent.id}>
-                        <ListItemText>{appEvent.title}</ListItemText>    
-                    </ListItem>
-                ))}
-            </List>
-        </>
+        <Box sx={{display: 'flex', flexDirection: 'column', gap: 3}}>
+            {appEvents.map((appEvent) => (
+                <EventCard key={appEvent.id} appEvent={appEvent} />
+            ))}
+        </Box>
     )
 }

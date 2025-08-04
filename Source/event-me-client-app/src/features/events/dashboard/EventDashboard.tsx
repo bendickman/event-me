@@ -1,10 +1,16 @@
+import { Grid2 } from "@mui/material";
 import EventList from "./EventList";
 
-export default function EventDashboard () {
+type Props = {
+    appEvents: AppEvent[];
+}
+
+export default function EventDashboard ({appEvents}: Props) {
     return (
-        <div>
-            <h2>Event Dashboard</h2>
-            <EventList />
-        </div>
+        <Grid2 container>
+            <Grid2 size={9}>
+                <EventList appEvents={appEvents} />
+            </Grid2>
+        </Grid2>
     )
 }
