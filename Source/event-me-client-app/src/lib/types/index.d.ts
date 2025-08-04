@@ -10,3 +10,8 @@ type AppEvent = {
   latitude: number
   longitude: number
 }
+
+type PaginatedResult<T> = {
+  items: T[]
+  cursoe: string
+}

@@ -4,10 +4,9 @@ import EventCard from "./EventCard";
 type Props = {
     appEvents: AppEvent[];
     selectAppEvent: (id: string) => void;
-    deleteAppEvent: (id: string) => void;
 }
 
-export default function EventList ({appEvents, selectAppEvent, deleteAppEvent} : Props) {
+export default function EventList ({appEvents, selectAppEvent} : Props) {
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', gap: 3}}>
@@ -16,7 +15,6 @@ export default function EventList ({appEvents, selectAppEvent, deleteAppEvent} :
                     key={appEvent.id} 
                     appEvent={appEvent}
                     selectAppEvent={selectAppEvent}
-                    deleteAppEvent={deleteAppEvent}
                 />
             ))}
         </Box>
