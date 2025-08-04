@@ -11,7 +11,7 @@ type AppEvent = {
   longitude: number
 }
 
-type PaginatedResult<T> = {
+type PaginatedResults<T> = {
   items: T[]
   cursoe: string
 }
