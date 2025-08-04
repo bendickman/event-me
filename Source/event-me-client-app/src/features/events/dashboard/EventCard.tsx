@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material";
-import { useAppEvents } from "../../../lib/hooks/UseAppEvents";
+import { useAppEvents } from "../../../lib/hooks/useAppEvents";
 
 type Props = {
     appEvent: AppEvent;
