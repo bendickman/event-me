@@ -1,11 +1,12 @@
-import { Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material";
 
 type Props = {
     appEvent: AppEvent;
     selectAppEvent: (id: string) => void;
+    deleteAppEvent: (id: string) => void;
 }
 
-export default function EventCard({appEvent, selectAppEvent}: Props) {
+export default function EventCard({appEvent, selectAppEvent, deleteAppEvent}: Props) {
   return (
     <Card sx={{borderRadius: 3}}>
         <CardContent>
@@ -16,7 +17,10 @@ export default function EventCard({appEvent, selectAppEvent}: Props) {
         </CardContent>
         <CardActions sx={{display: 'flex', justifyContent: 'space-between', pb: 2}}>
             <Chip label={appEvent.category} variant="outlined" />
-            <Button size="medium" variant="contained" onClick={() => selectAppEvent(appEvent.id)}>View</Button>
+            <Box display='flex' gap={1}>
+                <Button size="medium" variant="contained" onClick={() => selectAppEvent(appEvent.id)}>View</Button>
+                <Button size="medium" color="error" variant="contained" onClick={() => deleteAppEvent(appEvent.id)}>Delete</Button>
+            </Box>
         </CardActions>
     </Card>
   )
