@@ -2,9 +2,10 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@
 
 type Props = {
     appEvent: AppEvent;
+    cancelSelectAppEvent: () => void;
 }
 
-export default function EventDetails({appEvent}: Props) {
+export default function EventDetails({appEvent, cancelSelectAppEvent}: Props) {
   return (
     <Card sx={{borderRadius: 3}}>
         <CardMedia
@@ -18,7 +19,7 @@ export default function EventDetails({appEvent}: Props) {
         </CardContent>
         <CardActions>
             <Button color="primary">Edit</Button>
-            <Button color="inherit">Cancel</Button>
+            <Button color="inherit" onClick={cancelSelectAppEvent}>Cancel</Button>
         </CardActions>
     </Card>
   )
