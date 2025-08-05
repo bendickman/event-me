@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../api/agent";
 
-export const useAppEvents = () => {
+export const useAppEvents = (id?: string) => {
     const queryClient = useQueryClient();
 
     const { data: appEvents, isPending } = useQuery({
@@ -11,6 +11,16 @@ export const useAppEvents = () => {
 
             return response.data.items;
         }
+    });
+
+    const { data: appEvent, isLoading: isLoadingAppEvent } = useQuery({
+        queryKey: ['appEvents', id],
+        queryFn: async () => {
+            const response = await agent.get<AppEvent>(`/event/${id}`);
+
+            return response.data;
+        },
+        enabled: !!id//enabled if we have an id, !! converts to boolean
     });
 
     const updateAppEvent = useMutation({
@@ -26,7 +36,9 @@ export const useAppEvents = () => {
 
     const createAppEvent = useMutation({
         mutationFn: async (appEvent: AppEvent) => {
-            await agent.post('/event/', appEvent)
+            const response = await agent.post('/event/', appEvent)
+
+            return response.data;
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({
@@ -52,5 +64,7 @@ export const useAppEvents = () => {
         updateAppEvent,
         createAppEvent,
         deleteAppEvent,
+        appEvent,
+        isLoadingAppEvent,
     }
 }

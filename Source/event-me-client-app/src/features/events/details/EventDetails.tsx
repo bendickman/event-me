@@ -1,12 +1,16 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import { useNavigate, useParams } from "react-router";
+import { useAppEvents } from "../../../lib/hooks/useAppEvents";
 
-type Props = {
-    appEvent: AppEvent;
-    cancelSelectAppEvent: () => void;
-    openForm: (id: string) => void;
-}
+export default function EventDetails() {
+    const navigate = useNavigate();
+    const {id} = useParams();
+    const {appEvent, isLoadingAppEvent} = useAppEvents(id);
 
-export default function EventDetails({appEvent, cancelSelectAppEvent, openForm}: Props) {
+    if (isLoadingAppEvent) return <Typography>Loading...</Typography>
+
+    if (!appEvent) return <Typography>Event not found</Typography>
+
   return (
     <Card sx={{borderRadius: 3}}>
         <CardMedia
@@ -19,8 +23,8 @@ export default function EventDetails({appEvent, cancelSelectAppEvent, openForm}:
             <Typography variant="body1">{appEvent.description}</Typography>
         </CardContent>
         <CardActions>
-            <Button color="primary" onClick={() => openForm(appEvent.id)}>Edit</Button>
-            <Button color="inherit" onClick={cancelSelectAppEvent}>Cancel</Button>
+            <Button color="primary" onClick={() => navigate(`/edit-event/${appEvent.id}`)}>Edit</Button>
+            <Button color="inherit" onClick={() => navigate('/events')}>Cancel</Button>
         </CardActions>
     </Card>
   )

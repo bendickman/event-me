@@ -1,12 +1,11 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import EventCard from "./EventCard";
+import { useAppEvents } from "../../../lib/hooks/useAppEvents";
 
-type Props = {
-    appEvents: AppEvent[];
-    selectAppEvent: (id: string) => void;
-}
+export default function EventList () {
+    const {appEvents, isPending} = useAppEvents();
 
-export default function EventList ({appEvents, selectAppEvent} : Props) {
+    if (!appEvents || isPending) return <Typography>Loading...</Typography>
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', gap: 3}}>
@@ -14,7 +13,6 @@ export default function EventList ({appEvents, selectAppEvent} : Props) {
                 <EventCard 
                     key={appEvent.id} 
                     appEvent={appEvent}
-                    selectAppEvent={selectAppEvent}
                 />
             ))}
         </Box>

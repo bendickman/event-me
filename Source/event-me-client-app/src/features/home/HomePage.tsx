@@ -1,10 +1,9 @@
-import EventDashboard from "../events/dashboard/EventDashboard";
+import { Container, Typography } from "@mui/material";
 
 export default function HomePage() {
     return (
-        <div>
-            <h2>Event Me!</h2>
-            <EventDashboard />
-        </div>
+        <Container sx={{mt: 3}}>
+            <Typography variant="h3">Home Page</Typography>
+        </Container>
     )
 }

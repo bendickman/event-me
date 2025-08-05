@@ -1,14 +1,12 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import type { FormEvent } from "react";
-import { useAppEvents } from "../../../lib/hooks/UseAppEvents";
+import { useAppEvents } from "../../../lib/hooks/useAppEvents";
+import { useNavigate, useParams } from "react-router";
 
-type Props = {
-  appEvent?: AppEvent;
-  closeForm: () => void;
-}
-
-export default function EventForm({ appEvent, closeForm }: Props) {
-  const { updateAppEvent, createAppEvent } = useAppEvents();
+export default function EventForm() {
+  const { id } = useParams();
+  const { updateAppEvent, createAppEvent, appEvent, isLoadingAppEvent } = useAppEvents(id);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -24,17 +22,22 @@ export default function EventForm({ appEvent, closeForm }: Props) {
     if (appEvent) {
       data.id = appEvent.id;
       await updateAppEvent.mutateAsync(data as unknown as AppEvent);
-      closeForm();
+      navigate(`/events/${appEvent.id}`);
     } else {
-      await createAppEvent.mutateAsync(data as unknown as AppEvent);
-      closeForm();
+      createAppEvent.mutate(data as unknown as AppEvent, {
+        onSuccess: (id) => {
+          navigate(`/events/${id}`);
+        }
+      });
     }
   }
+
+  if (isLoadingAppEvent) return <Typography>Loading Event...</Typography>
 
   return (
     <Paper sx={{ borderRadius: 3, padding: 3 }}>
       <Typography variant="h5" gutterBottom color="primary">
-        Create Event
+        {appEvent ? 'Edit Event' : 'Create Event'}
       </Typography>
       <Box component='form' onSubmit={handleSubmit} display='flex' flexDirection='column' gap={3}>
         <TextField name='title' label='Title' defaultValue={appEvent?.title} />
@@ -49,7 +52,7 @@ export default function EventForm({ appEvent, closeForm }: Props) {
         <TextField name='city' label='City' defaultValue={appEvent?.city} />
         <TextField name='venue' label='Venue' defaultValue={appEvent?.venue} />
         <Box display='flex' justifyContent='end' gap={3}>
-          <Button color="inherit" onClick={closeForm}>Cancel</Button>
+          <Button color="inherit">Cancel</Button>
           <Button
             type="submit"
             color="success"

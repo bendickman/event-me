@@ -1,14 +1,13 @@
 import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from "@mui/material";
 import { useAppEvents } from "../../../lib/hooks/useAppEvents";
+import { Link } from "react-router";
 
 type Props = {
     appEvent: AppEvent;
-    selectAppEvent: (id: string) => void;
 }
 
-export default function EventCard({ appEvent, selectAppEvent }: Props) {
+export default function EventCard({ appEvent }: Props) {
     const { deleteAppEvent } = useAppEvents();
-
 
     return (
         <Card sx={{ borderRadius: 3 }}>
@@ -21,11 +20,11 @@ export default function EventCard({ appEvent, selectAppEvent }: Props) {
             <CardActions sx={{ display: 'flex', justifyContent: 'space-between', pb: 2 }}>
                 <Chip label={appEvent.category} variant="outlined" />
                 <Box display='flex' gap={1}>
-                    <Button size="medium" variant="contained" onClick={() => selectAppEvent(appEvent.id)}>View</Button>
-                    <Button 
-                        size="medium" 
-                        color="error" 
-                        variant="contained" 
+                    <Button size="medium" variant="contained" component={Link} to={`/events/${appEvent.id}`}>View</Button>
+                    <Button
+                        size="medium"
+                        color="error"
+                        variant="contained"
                         disabled={deleteAppEvent.isPending}
                         onClick={() => deleteAppEvent.mutate(appEvent.id)}>Delete</Button>
                 </Box>
