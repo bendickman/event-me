@@ -32,7 +32,7 @@ export default function HomePage() {
             </Typography>
             <Button
                 sx={{ display: 'flex', justifySelf: 'self-end', borderRadius: 3 }}
-                size="medium"
+                size="large"
                 variant="contained"
                 component={Link} to={'/events'}>
                 Show me the Events
