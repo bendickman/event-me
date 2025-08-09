@@ -4,6 +4,7 @@ import HomePage from "../../features/home/HomePage";
 import EventDashboard from "../../features/events/dashboard/EventDashboard";
 import EventForm from "../../features/events/form/EventForm";
 import EventDetails from "../../features/events/details/EventDetails";
+import Counter from "../../features/counter/Counter";
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
             { path: '/events/:id', element: <EventDetails /> },
             { path: '/create-event', element: <EventForm key='create' /> },
             { path: '/edit-event/:id', element: <EventForm /> },
+            { path: '/counter', element: <Counter /> },
         ]
     }
 ])

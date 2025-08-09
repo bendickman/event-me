@@ -1,8 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../api/agent";
+import { useLocation } from "react-router";
 
 export const useAppEvents = (id?: string) => {
     const queryClient = useQueryClient();
+    const location = useLocation();
 
     const { data: appEvents, isPending } = useQuery({
         queryKey: ['appEvents'],
@@ -10,7 +12,8 @@ export const useAppEvents = (id?: string) => {
             const response = await agent.get<PaginatedResults<AppEvent>>('/event?pagesize=25');
 
             return response.data.items;
-        }
+        },
+        enabled: !id && location.pathname === '/events'
     });
 
     const { data: appEvent, isLoading: isLoadingAppEvent } = useQuery({

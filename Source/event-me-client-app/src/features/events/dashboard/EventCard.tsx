@@ -1,7 +1,7 @@
 import { AccessTime, Place } from "@mui/icons-material";
 import { Avatar, Box, Button, Card, CardContent, CardHeader, Chip, Divider, Typography } from "@mui/material";
 import { Link } from "react-router";
-import { format } from 'date-fns';
+import { formatDate } from '../../../lib/util/util';
 
 type Props = {
     appEvent: AppEvent;
@@ -43,7 +43,7 @@ export default function EventCard({ appEvent }: Props) {
                 <Box display='flex' alignItems='center' mb={2} px={2}>
                     <Box display='flex' flexGrow={0} alignItems='center'>
                         <AccessTime sx={{ mr: 1 }} />
-                        <Typography variant="body2">{format(appEvent.date, 'dd MMM yyyy h:mm a')}</Typography>
+                        <Typography variant="body2">{formatDate(appEvent.date)}</Typography>
                         <Place sx={{ ml: 3, mr: 1 }} />
                         <Typography variant="body2">{appEvent.venue}</Typography>
                     </Box>
