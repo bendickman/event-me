@@ -1,9 +1,12 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router";
+import { Grid2, Typography } from "@mui/material";
+import { useParams } from "react-router";
 import { useAppEvents } from "../../../lib/hooks/useAppEvents";
+import EventDetailsHeader from "./EventDetailsHeader";
+import EventDetailsInfo from "./EventDetailsInfo";
+import EventDetailsChat from "./EventDetailsChat";
+import EventDetailsSidebar from "./EventDetailsSidebar";
 
 export default function EventDetails() {
-    const navigate = useNavigate();
     const {id} = useParams();
     const {appEvent, isLoadingAppEvent} = useAppEvents(id);
 
@@ -12,20 +15,15 @@ export default function EventDetails() {
     if (!appEvent) return <Typography>Event not found</Typography>
 
   return (
-    <Card sx={{borderRadius: 3}}>
-        <CardMedia
-            component='img'
-            src={`/images/category/${appEvent.category}.jpg`} 
-        />
-        <CardContent>
-            <Typography variant="h5">{appEvent.title}</Typography>
-            <Typography variant="subtitle2" fontWeight='light'>{appEvent.date.toString()}</Typography>
-            <Typography variant="body1">{appEvent.description}</Typography>
-        </CardContent>
-        <CardActions>
-            <Button color="primary" onClick={() => navigate(`/edit-event/${appEvent.id}`)}>Edit</Button>
-            <Button color="inherit" onClick={() => navigate('/events')}>Cancel</Button>
-        </CardActions>
-    </Card>
+    <Grid2 container spacing={3} >
+        <Grid2 size={8}>
+            <EventDetailsHeader appEvent={appEvent} />
+            <EventDetailsInfo appEvent={appEvent} />
+            <EventDetailsChat />
+        </Grid2>
+        <Grid2 size={4}>
+            <EventDetailsSidebar />
+        </Grid2>
+    </Grid2>
   )
 }
