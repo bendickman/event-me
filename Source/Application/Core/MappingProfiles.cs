@@ -13,5 +13,6 @@ public class MappingProfiles : Profile
         CreateMap<AppEvent, AppEvent>();
         CreateMap<AppEvent, EventDto>();
         CreateMap<CreateEventDto, AppEvent>();
+        CreateMap<EditEventDto, AppEvent>();
     }
 }

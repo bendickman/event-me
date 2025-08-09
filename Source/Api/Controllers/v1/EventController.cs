@@ -2,7 +2,6 @@
 using Application.Events.Commands;
 using Application.Events.DTOs;
 using Application.Events.Queries;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1
@@ -28,11 +27,10 @@ namespace Api.Controllers.v1
             return HandleResult(await Mediator.Send(new CreateEvent.Command { EventDto = eventDto }));
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> EditActivity(string id, AppEvent appEvent)
+        [HttpPut]
+        public async Task<ActionResult> EditActivity(EditEventDto editEventDto)
         {
-            appEvent.Id = id;
-            return HandleResult(await Mediator.Send(new EditEvent.Command { AppEvent = appEvent }));
+            return HandleResult(await Mediator.Send(new EditEvent.Command { EditEventDto = editEventDto }));
         }
 
         [HttpDelete("{id}")]

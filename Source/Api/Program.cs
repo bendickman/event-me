@@ -1,6 +1,9 @@
+using Api.Middleware;
 using Application.Core;
 using Application.Events.Queries;
+using Application.Events.Validators;
 using Domain;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -22,7 +25,9 @@ builder.Services.AddMediatR(x =>
     x.AddOpenBehavior(typeof(ValidationBehaviour<,>));
 });
 
+builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+builder.Services.AddValidatorsFromAssemblyContaining<CreateEventValidator>();
 
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
 {
@@ -39,6 +44,7 @@ builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
