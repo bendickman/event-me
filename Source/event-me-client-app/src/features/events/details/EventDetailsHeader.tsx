@@ -64,7 +64,7 @@ export default function EventDetailsHeader({appEvent}: Props) {
                                 variant="contained"
                                 color="primary"
                                 component={Link}
-                                to={`/manage/eventId`}
+                                to={`/edit-event/${appEvent.id}`}
                                 disabled={isCancelled}
                             >
                                 Manage Event

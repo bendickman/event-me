@@ -27,8 +27,8 @@ export const useAppEvents = (id?: string) => {
     });
 
     const updateAppEvent = useMutation({
-        mutationFn: async (appEvent: AppEvent) => {
-            await agent.put(`/event/${appEvent.id}`, appEvent)
+        mutationFn: async (updatedAppEvent: AppEvent) => {
+            await agent.put('event', updatedAppEvent)
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({

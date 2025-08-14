@@ -7,8 +7,6 @@ type AppEvent = {
   isCancelled: boolean
   city: string
   venue: string
-  latitude: number
-  longitude: number
 }
 
 type PaginatedResults<T> = {
