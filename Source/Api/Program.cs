@@ -4,15 +4,23 @@ using Application.Events.Queries;
 using Application.Events.Validators;
 using Domain;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers(opt =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
 
-builder.Services.AddControllers();
+    opt.Filters.Add(new AuthorizeFilter(policy));
+});
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
@@ -33,6 +41,7 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
 {
     opt.User.RequireUniqueEmail = true;
 })
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -53,8 +62,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod()
-    .WithOrigins("https://localhost:5173", "http://localhost:5173"));
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials()
+        .WithOrigins("https://localhost:5173", "http://localhost:5173");
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
