@@ -13,3 +13,10 @@ type PaginatedResults<T> = {
   items: T[]
   cursoe: string
 }
+
+type User = {
+  id: string
+  email: string
+  displayName: string
+  imageUrl?: string
+}

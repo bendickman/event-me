@@ -3,9 +3,11 @@ import EventCard from "./EventCard";
 import { useAppEvents } from "../../../lib/hooks/useAppEvents";
 
 export default function EventList () {
-    const {appEvents, isPending} = useAppEvents();
+    const {appEvents, isLoading} = useAppEvents();
 
-    if (!appEvents || isPending) return <Typography>Loading...</Typography>
+    if (isLoading) return <Typography>Loading...</Typography>
+
+    if (!appEvents) return <Typography>No Events...</Typography>
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', gap: 3}}>

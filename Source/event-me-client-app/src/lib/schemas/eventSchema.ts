@@ -1,9 +1,5 @@
 import { z } from 'zod';
-
-const requiredString = (fieldName: string) => z
-    .string({ message: `${fieldName} is required`})
-    .min(1, {message: `${fieldName} is required`}
-)
+import { requiredString } from '../util/util';
 
 export const eventSchema = z.object({
     title: requiredString('Title'),

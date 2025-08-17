@@ -2,8 +2,7 @@ import { Grid2 } from "@mui/material";
 import EventList from "./EventList";
 import EventFilters from "./EventFilters";
 
-export default function EventDashboard () {
-    
+export default function EventDashboard() {
 
     return (
         <Grid2 container spacing={3}>

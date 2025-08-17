@@ -74,7 +74,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapGroup("api").MapIdentityApi<User>(); // api/login
+app.MapGroup("api/v1").MapIdentityApi<User>(); // api/v1/login
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

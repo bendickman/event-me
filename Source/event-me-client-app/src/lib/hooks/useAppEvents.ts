@@ -1,19 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import agent from "../api/agent";
 import { useLocation } from "react-router";
+import { useAccount } from "./useAccount";
 
 export const useAppEvents = (id?: string) => {
     const queryClient = useQueryClient();
     const location = useLocation();
+    const { currentUser } = useAccount();
 
-    const { data: appEvents, isPending } = useQuery({
+    const { data: appEvents, isLoading } = useQuery({
         queryKey: ['appEvents'],
         queryFn: async () => {
             const response = await agent.get<PaginatedResults<AppEvent>>('/event?pagesize=25');
 
             return response.data.items;
         },
-        enabled: !id && location.pathname === '/events'
+        enabled: !id && location.pathname === '/events' && !!currentUser
     });
 
     const { data: appEvent, isLoading: isLoadingAppEvent } = useQuery({
@@ -23,7 +25,7 @@ export const useAppEvents = (id?: string) => {
 
             return response.data;
         },
-        enabled: !!id//enabled if we have an id, !! converts to boolean
+        enabled: !!id && !!currentUser//enabled if we have an id & logged in user, (!! converts to boolean)
     });
 
     const updateAppEvent = useMutation({
@@ -63,7 +65,7 @@ export const useAppEvents = (id?: string) => {
 
     return {
         appEvents,
-        isPending,
+        isLoading,
         updateAppEvent,
         createAppEvent,
         deleteAppEvent,
