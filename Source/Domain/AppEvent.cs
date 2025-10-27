@@ -26,4 +26,7 @@ public class AppEvent
     public double Latitude { get; set; }
 
     public double Longitude { get; set; }
+
+    //navigation properties
+    public ICollection<AppEventAttendee> Attendees { get; set; } = [];
 }

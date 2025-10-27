@@ -1,4 +1,6 @@
-﻿namespace Application.Events.DTOs;
+﻿using Application.Profiles.DTOs;
+
+namespace Application.Events.DTOs;
 
 public class EventDto
 {
@@ -26,4 +28,6 @@ public class EventDto
     public double Latitude { get; set; }
 
     public double Longitude { get; set; }
+
+    public ICollection<UserProfile> Attendees { get; set; } = [];
 }

@@ -2,6 +2,7 @@
 using Application.Events.Commands;
 using Application.Events.DTOs;
 using Application.Events.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.v1
@@ -28,15 +29,23 @@ namespace Api.Controllers.v1
         }
 
         [HttpPut]
+        [Authorize(Policy = "IsActivityHost")]
         public async Task<ActionResult> EditActivity(EditEventDto editEventDto)
         {
             return HandleResult(await Mediator.Send(new EditEvent.Command { EditEventDto = editEventDto }));
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "IsActivityHost")]
         public async Task<ActionResult> DeleteActivity(string id)
         {
             return HandleResult(await Mediator.Send(new DeleteEvent.Command { Id = id }));
+        }
+
+        [HttpPost("{id}/attend")]
+        public async Task<ActionResult> Attend(string id)
+        {
+            return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
         }
     }
 }

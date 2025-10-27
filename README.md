@@ -13,6 +13,10 @@ dotnet ef migrations add InitialCreate -p Persistence -s Api
 ```
 
 ```console
+dotnet ef migrations remove -p Persistence -s Api
+```
+
+```console
 dotnet ef database update -p Persistence -s Api
 ```
 

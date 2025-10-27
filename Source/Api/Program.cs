@@ -2,8 +2,10 @@ using Api.Middleware;
 using Application.Core;
 using Application.Events.Queries;
 using Application.Events.Validators;
+using Application.Interfaces;
 using Domain;
 using FluentValidation;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -34,6 +36,7 @@ builder.Services.AddMediatR(x =>
 });
 
 builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddValidatorsFromAssemblyContaining<CreateEventValidator>();
 
@@ -43,6 +46,14 @@ builder.Services.AddIdentityApiEndpoints<User>(opt =>
 })
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("IsActivityHost", policy =>
+    {
+        policy.Requirements.Add(new IsHostRequirement());
+    });
+
+builder.Services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
