@@ -1,4 +1,5 @@
 using Api.Middleware;
+using Api.SignalR;
 using Application.Core;
 using Application.Events.Queries;
 using Application.Events.Validators;
@@ -60,6 +61,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -86,6 +88,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGroup("api/v1").MapIdentityApi<User>(); // api/v1/login
+app.MapHub<CommentHub>("/comments");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

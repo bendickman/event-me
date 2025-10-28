@@ -29,4 +29,6 @@ public class AppEvent
 
     //navigation properties
     public ICollection<AppEventAttendee> Attendees { get; set; } = [];
+
+    public ICollection<Comment> Comments { get; set; } = [];
 }
