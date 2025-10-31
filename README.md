@@ -23,3 +23,7 @@ dotnet ef database update -p Persistence -s Api
 ```console
 dotnet ef database drop -p Persistence -s Api
 ```
+
+```console
+dotnet ef migrations script -o eventme.sql -p Persistence -s Api
+```
