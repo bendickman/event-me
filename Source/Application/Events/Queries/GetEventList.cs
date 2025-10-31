@@ -28,6 +28,18 @@ public class GetEventList
                 .Where(e => e.Date >= (request.Parameters.Cursor ?? request.Parameters.StartDate))
                 .AsQueryable();
 
+            if (!string.IsNullOrEmpty(request.Parameters.Filter))
+            {
+                query = request.Parameters.Filter switch
+                {
+                    "isGoing" => query.Where(x =>
+                        x.Attendees.Any(a => a.UserId == userAccessor.GetUserId())),
+                    "isHost" => query.Where(x =>
+                        x.Attendees.Any(a => a.IsHost && a.UserId == userAccessor.GetUserId())),
+                    _ => query
+                };
+            }
+
             var projectedEvents = query.ProjectTo<EventDto>(mapper.ConfigurationProvider,
                     new { currentUserId = userAccessor.GetUserId() });
 
@@ -36,7 +48,6 @@ public class GetEventList
                 .ToListAsync(cancellationToken);
 
             DateTime? nextCursor = null;
-
             if (events.Count > request.Parameters.PageSize)
             {
                 nextCursor = events.Last().Date;

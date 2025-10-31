@@ -17,9 +17,9 @@ type AppEvent = {
   hostImageUrl?: string
 }
 
-type PaginatedResults<T> = {
+type PaginatedResults<T, TCursor> = {
   items: T[]
-  cursoe: string
+  nextCursor: TCursor
 }
 
 type User = {

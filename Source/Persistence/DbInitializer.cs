@@ -12,9 +12,6 @@ public class DbInitializer
             new() {Id = Guid.NewGuid().ToString(), DisplayName = "Bob", UserName = "bob@test.com", Email = "bob@test.com"},
             new() {Id = Guid.NewGuid().ToString(), DisplayName = "Tom", UserName = "tom@test.com", Email = "tom@test.com"},
             new() {Id = Guid.NewGuid().ToString(), DisplayName = "Jane", UserName = "jane@test.com", Email = "jane@test.com"},
-            new() {Id = Guid.NewGuid().ToString(), DisplayName = "Ben", UserName = "ben@test.com", Email = "ben@test.com"},
-            new() {Id = Guid.NewGuid().ToString(), DisplayName = "Freddie", UserName = "freddie@test.com", Email = "freddie@test.com"},
-            new() {Id = Guid.NewGuid().ToString(), DisplayName = "Harry", UserName = "harry@test.com", Email = "harry@test.com"},
         };
 
         if (!userManager.Users.Any())
