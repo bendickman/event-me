@@ -1,4 +1,4 @@
-import { Card, Badge, CardMedia, Box, Typography, Button } from "@mui/material";
+import { Card, CardMedia, Box, Typography, Button, Chip } from "@mui/material";
 import { Link } from "react-router";
 import { formatDate } from "../../../lib/util/util";
 
@@ -15,10 +15,11 @@ export default function EventDetailsHeader({appEvent}: Props) {
     return (
         <Card sx={{ position: 'relative', mb: 2, backgroundColor: 'transparent', overflow: 'hidden' }}>
             {isCancelled && (
-                <Badge
-                    sx={{ position: 'absolute', left: 40, top: 20, zIndex: 1000 }}
+                <Chip
+                    sx={{ position: 'absolute', left: 40, top: 20, 
+                        zIndex: 1000, borderRadius: 1 }}
                     color="error"
-                    badgeContent="Cancelled"
+                    label="Cancelled"
                 />
             )}
             <CardMedia
@@ -45,7 +46,7 @@ export default function EventDetailsHeader({appEvent}: Props) {
                     <Typography variant="h4" sx={{ fontWeight: 'bold' }}>{appEvent.title}</Typography>
                     <Typography variant="subtitle1">{formatDate(appEvent.date)}</Typography>
                     <Typography variant="subtitle2">
-                        Hosted by <Link to={`/profiles/username`} style={{ color: 'white', fontWeight: 'bold' }}>Bob</Link>
+                        Hosted by <Link to={`/profiles/${appEvent.hostId}`} style={{ color: 'white', fontWeight: 'bold' }}>{appEvent.hostDisplayName}</Link>
                     </Typography>
                 </Box>
 

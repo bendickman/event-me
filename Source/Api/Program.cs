@@ -6,6 +6,7 @@ using Application.Events.Validators;
 using Application.Interfaces;
 using Domain;
 using FluentValidation;
+using Infrastructure.Providers;
 using Infrastructure.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -38,6 +39,7 @@ builder.Services.AddMediatR(x =>
 
 builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+builder.Services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddValidatorsFromAssemblyContaining<CreateEventValidator>();
 

@@ -22,7 +22,7 @@ export default function EventDetails() {
             <EventDetailsChat />
         </Grid2>
         <Grid2 size={4}>
-            <EventDetailsSidebar />
+            <EventDetailsSidebar appEvent={appEvent} />
         </Grid2>
     </Grid2>
   )

@@ -7,6 +7,14 @@ type AppEvent = {
   isCancelled: boolean
   city: string
   venue: string
+  latitude: number
+  longitude: number
+  attendees: Profile[]
+  isGoing: boolean
+  isHost: boolean
+  hostId: string
+  hostDisplayName: string
+  hostImageUrl?: string
 }
 
 type PaginatedResults<T> = {
@@ -28,4 +36,14 @@ type ChatComment = {
   userId: string
   displayName: string
   imageUrl?: string
+}
+
+type Profile = {
+  id: string
+  displayName: string
+  bio?: string
+  imageUrl?: string
+  followersCount?: number
+  followingCount?: number
+  following?: boolean
 }

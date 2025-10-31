@@ -1,5 +1,6 @@
 ﻿using Application.Core;
 using Application.Events.DTOs;
+using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -15,7 +16,10 @@ public class GetEventList
         public required EventParameters Parameters { get; set; }
     }
 
-    public class Handler(AppDbContext dbContext, IMapper mapper) : IRequestHandler<Query, Result<PagedList<EventDto, DateTime?>>>
+    public class Handler(
+        AppDbContext dbContext,
+        IMapper mapper,
+        IUserAccessor userAccessor) : IRequestHandler<Query, Result<PagedList<EventDto, DateTime?>>>
     {
         public async Task<Result<PagedList<EventDto, DateTime?>>> Handle(Query request, CancellationToken cancellationToken)
         {
@@ -24,7 +28,8 @@ public class GetEventList
                 .Where(e => e.Date >= (request.Parameters.Cursor ?? request.Parameters.StartDate))
                 .AsQueryable();
 
-            var projectedEvents = query.ProjectTo<EventDto>(mapper.ConfigurationProvider, new { currentUserId = 1 });
+            var projectedEvents = query.ProjectTo<EventDto>(mapper.ConfigurationProvider,
+                    new { currentUserId = userAccessor.GetUserId() });
 
             var events = await projectedEvents
                 .Take(request.Parameters.PageSize + 1)

@@ -11,6 +11,7 @@ import ServerError from "../../features/error/ServerError";
 import LoginForm from "../../features/account/LoginForm";
 import RequireAuth from "./RequireAuth";
 import RegisterForm from "../../features/account/RegisterForm";
+import ProfilePage from "../../features/profiles/ProfilePage";
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
                     { path: 'events/:id', element: <EventDetails /> },
                     { path: 'create-event', element: <EventForm key='create' /> },
                     { path: 'edit-event/:id', element: <EventForm /> },
+                    { path: 'profiles/:id', element: <ProfilePage /> },
                 ]
             },
             { path: '', element: <HomePage /> },
